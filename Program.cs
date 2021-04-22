@@ -1,50 +1,46 @@
 ﻿using System;
 
-namespace EX2
+namespace SR
 {
     class Program
-    {
-        static int IndexOfMin(int[] array, int n)
+        {
+
+            //метод обміну елементів
+            static void Swap(ref int e1, ref int e2)
             {
-                int result = n;
-                for (var i = n; i < array.Length; ++i)
-                {
-                    if (array[i] < array[result])
+                var temp = e1;
+                e1 = e2;
+                e2 = temp;
+            }
+            //сортування бульбашкою
+            static int[] BubbleSort(int[] array)
+            {
+                var len = array.Length;
+                for (var i = 1; i < len; i++)
+                { 
+                    for (var j = 0; j < len - i; j++)
                     {
-                        result = i;
+                        if (array[j] > array[j + 1])
+                        {
+                            Swap(ref array[j], ref array[j + 1]);
+
+                        }
                     }
                 }
-                return result;
-            }
-        static void Swap(ref int x, ref int y)
-        {
-            var t = x;
-            x = y;
-            y = t;
-        }
-        static int[] SelectionSort(int[] array, int currentIndex = 0)
-        {
-            if (currentIndex == array.Length)
                 return array;
-            var index = IndexOfMin(array, currentIndex);
-            if (index != currentIndex)
-            {
-                Swap(ref array[index], ref array[currentIndex]);
             }
-            return SelectionSort(array, currentIndex + 1);
-        }
-        static void Main(string[] args)
-        {
-            Console.WriteLine(" Сортування вибором ");
-            Console.Write(" Введіть елементи масиву: ");
-            var s = Console.ReadLine().Split(new[] { " ", ",", " ; "}, StringSplitOptions.RemoveEmptyEntries);
-            var a = new int[s.Length];
-            for (int i = 0; i < s.Length; i++)
+            static void Main(string[] args)
             {
-            a[i] = Convert.ToInt32(s[i]);
+                Console.WriteLine("Сортування бульбашкою");
+                Console.Write(" Введіть елементи масиву: ");
+                var parts = Console.ReadLine().Split(new[] { " ", ",", " ; " }, StringSplitOptions.RemoveEmptyEntries);
+                var array = new int[parts.Length];
+                for (int i = 0; i < parts.Length; i++)
+                {
+                array[i] = Convert.ToInt32(parts[i]);
+                }
+                Console.WriteLine("Відсортований масив: {0}", string.Join(", ", BubbleSort(array)));
+                Console.ReadLine();
             }
-            Console.WriteLine("Впорядкований масив: {0}", string.Join(", ", SelectionSort(a)));
-            Console.ReadLine();
         }
-    }
 }
